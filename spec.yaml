@@ -1,0 +1,436 @@
+openapi: 3.0.0
+servers:
+  - url: http://18.140.1.190:7000
+    description: Secur3DP+ deployed AWS Instance(HTTP)
+  - url: https://18.140.1.190:7000
+    description: Secur3DP+ deployed AWS Instance(HTTPS)
+
+info:
+  description: |
+    This is official API documentation of Secur3DP+
+
+    # Introduction
+    Commendo Blockchain which is invented at Nanyang Technological University introduce a new methodology for
+    enterprises to rapidly incorporate blockchain technology to their existing complex business applications with low impact.
+    Commendo provides integrity and immutability to keep track of the business events.
+
+    # Commendo Blockchain
+    This API is documented in **OpenAPI format** and is based on
+     It was **extended** to illustrate features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo)
+    tool and [ReDoc](https://github.com/Redocly/redoc) documentation. In addition to standard
+    OpenAPI syntax we use a few [vendor extensions](https://github.com/Redocly/redoc/blob/master/docs/redoc-vendor-extensions.md).
+    # Commendo REST API
+    The REST APIs of the Commendo Blockchain are the main integration points of the Commendo Blockchain with the Business layer.  It supports HTTP with SSL security or without SSL security.  The REST APIs are twofold with Transaction Commit API and Transaction Retrievel API.
+    # Transaction Commit API
+    Transaction Commit API utilized to log the transactions from Business -> Blockchain direction.  The response will contain corresponding `blockchain_id`, which is usable to retrieve the transaction from the blockchain
+    will be returned for the successful request.
+
+    # Transaction Retrievel API
+
+    Transaction Retreievel API provides services to transaction searching function as
+      - Individual transaction search from `blockchain_id`.
+      - Multiple transaction search from multiple `blockchain_id`s.
+
+
+
+  version: 1.0.0
+  title: Secur3DP+ API Powered by Commendo Blockchain
+  termsOfService: 'https://commendo.io/terms/'
+  contact:
+    name: API Support
+    email: support@commendo.io
+    url: https://commendo.io
+  x-logo:
+    url: 'https://www.3dprintingbusiness.directory/wp-content/uploads/2019/05/secur3dplogo.png'
+    altText: Petstore logo
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+externalDocs:
+  description: The API source will be shared on developer request.
+  url: 'https://github.com/Rebilly/generator-openapi-repo'
+tags:
+  - name: Biz_BC_Event
+    description: Business to Blockchain layer transaction API
+  - name: store
+    description: Access to Petstore orders
+  - name: user
+    description: Operations about user
+  - name: pet_model
+    x-displayName: The Pet Model
+    description: |
+      <SchemaDefinition schemaRef="#/components/schemas/Pet" />
+  - name: store_model
+    x-displayName: The Order Model
+    description: |
+      <SchemaDefinition schemaRef="#/components/schemas/Order" exampleRef="#/components/examples/Order" showReadOnly={true} showWriteOnly={true} />
+x-tagGroups:
+  - name: Biz->BC
+    tags:
+      - Biz_BC_Event
+  - name: Txn Search by ID
+    tags:
+      - gettransactionssearch
+  - name: Multi-Txn Search
+    tags:
+      - gettransactionssearchmultiple
+
+
+
+paths:
+  /Biz_BC_Event:
+    parameters:
+      - name: Accept-Language
+
+        description: "The language you prefer for messages. Supported values are en-AU, en-CA, en-GB, en-US"
+        example: en-US
+        required: true
+        schema:
+          type: string
+          default: en-AU
+
+    post:
+      tags:
+        - Biz_BC_Event
+      summary: Biz_BC_Event
+      description: Push the event from the business layer into the blockchain layer.
+      operationId: Biz_BC_Event
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - petstore_auth:
+            - 'write:pets'
+            - 'read:pets'
+      x-code-samples:
+
+      requestBody:
+        $ref: '#/components/requestBodies/Pet'
+
+  /gettransactionssearch:
+    parameters:
+      - name: Accept-Language
+
+        description: "The language you prefer for messages. Supported values are en-AU, en-CA, en-GB, en-US"
+        example: en-US
+        required: true
+        schema:
+          type: string
+          default: en-AU
+
+    post:
+      tags:
+        - gettransactionssearch
+      summary: gettransactionssearch
+      description: Retrieve the transactions from `blockchain_id`.
+      operationId: gettransactionssearch
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+               type: string
+               default: transaction-data-object
+      security:
+        - petstore_auth:
+            - 'write:pets'
+            - 'read:pets'
+      x-code-samples:
+
+      requestBody:
+        $ref: '#/components/requestBodies/Pet1'
+  /gettransactionssearchmultiple:
+    parameters:
+      - name: Accept-Language
+
+        description: "The language you prefer for messages. Supported values are en-AU, en-CA, en-GB, en-US"
+        example: en-US
+        required: true
+        schema:
+          type: string
+          default: en-AU
+
+    post:
+      tags:
+        - gettransactionssearchmultiple
+      summary: gettransactionssearchmultiple
+      description: Retrieve the transactions from multiple `blockchain_id`s.
+      operationId: gettransactionssearchmultiple
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                 type: string
+                 default: transaction-data-array-object
+      security:
+        - petstore_auth:
+            - 'write:pets'
+            - 'read:pets'
+      x-code-samples:
+
+      requestBody:
+        $ref: '#/components/requestBodies/Pet2'
+
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          format: string
+        blockchain_id:
+          type: string
+          format: string
+
+      ApiResponse1:
+        type: object
+        properties:
+          transactionData:
+            type: object
+
+    Cat:
+      description: A representation of a cat
+
+
+
+    Category:
+      type: object
+      properties:
+        id:
+          description: Category ID
+          allOf:
+            - $ref: '#/components/schemas/Id'
+        name:
+          description: Category name
+          type: string
+          minLength: 1
+        sub:
+          description: Test Sub Category
+          type: object
+          properties:
+            prop1:
+              type: string
+              description: Dumb Property
+      xml:
+        name: Category
+    Dog:
+      description: A representation of a dog
+
+    HoneyBee:
+      description: A representation of a honey bee
+      allOf:
+        - $ref: '#/components/schemas/Pet'
+        - type: object
+
+    Id:
+      type: integer
+      format: int64
+      readOnly: true
+    Order:
+      type: object
+      properties:
+        id:
+          description: Order ID
+          allOf:
+            - $ref: '#/components/schemas/Id'
+        petId:
+          description: Pet ID
+          allOf:
+            - $ref: '#/components/schemas/Id'
+        quantity:
+          type: integer
+          format: int32
+          minimum: 1
+          default: 1
+        shipDate:
+          description: Estimated ship date
+          type: string
+          format: date-time
+        status:
+          type: string
+          description: Order Status
+          enum:
+            - placed
+            - approved
+            - delivered
+        complete:
+          description: Indicates whenever order was completed or not
+          type: boolean
+          default: false
+          readOnly: true
+        rqeuestId:
+          description: Unique Request Id
+          type: string
+          writeOnly: true
+      xml:
+        name: Order
+    Pet:
+      type: object
+      required:
+        - name
+        - photoUrls
+
+      properties:
+
+        sender:
+          description: The transaction originator
+          type: string
+          example: Eng Kiat
+        recepient:
+          description: The transaction recepient
+          type: string
+          example: Kalyan
+        data:
+            type: string
+            description: Transaction data json object in string
+            example: data120
+        timestamp:
+          type: string
+          description: Transaction timestamp
+          example: data120
+    Pet1:
+        type: object
+        required:
+          - name
+          - photoUrls
+
+        properties:
+
+          blockchain_id:
+            description: The blockchain_id of the required transaction
+            type: string
+            example: 1573792000845
+    Pet2:
+                  type: object
+                  required:
+                    - name
+                    - photoUrls
+
+                  properties:
+
+                    multiple_ids:
+                      description: The blockchain_ids seperated by a comma for the required transactions
+                      type: string
+                      example: 1573792000845,1573788522922
+
+    Tag:
+      type: object
+      properties:
+        id:
+          description: Tag ID
+          allOf:
+            - $ref: '#/components/schemas/Id'
+        name:
+          description: Tag name
+          type: string
+          minLength: 1
+      xml:
+        name: Tag
+    User:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        pet:
+          oneOf:
+            - $ref: '#/components/schemas/Pet'
+            - $ref: '#/components/schemas/Tag'
+        username:
+          description: User supplied username
+          type: string
+          minLength: 4
+          example: John78
+        firstName:
+          description: User first name
+          type: string
+          minLength: 1
+          example: John
+        lastName:
+          description: User last name
+          type: string
+          minLength: 1
+          example: Smith
+        email:
+          description: User email address
+          type: string
+          format: email
+          example: john.smith@example.com
+        password:
+          type: string
+          description: >-
+            User password, MUST contain a mix of upper and lower case letters,
+            as well as digits
+          format: password
+          minLength: 8
+          pattern: '/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/'
+          example: drowssaP123
+        phone:
+          description: User phone number in international format
+          type: string
+          pattern: '/^\+(?:[0-9]-?){6,14}[0-9]$/'
+          example: +1-202-555-0192
+        userStatus:
+          description: User status
+          type: integer
+          format: int32
+      xml:
+        name: User
+  requestBodies:
+    Pet:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - description: My Pet
+                title: Pettie
+              - $ref: '#/components/schemas/Pet'
+
+
+    Pet1:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - description: My Pet
+                title: Pettie
+
+              - $ref: '#/components/schemas/Pet1'
+
+    Pet2:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - description: My Pet
+                title: Pettie
+
+              - $ref: '#/components/schemas/Pet2'
+
+
+      description: Pet object that needs to be added to the store
+      required: true
+    UserArray:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+      description: List of user object
+      required: true
+
+  examples:
+    Order:
+      value:
+        quantity: 1,
+        shipDate: 2018-10-19T16:46:45Z,
+        status: placed,
+        complete: false
