@@ -41,7 +41,7 @@ info:
     email: support@commendo.io
     url: https://commendo.io
   x-logo:
-    url: 'https://www.3dprintingbusiness.directory/wp-content/uploads/2019/05/secur3dplogo.png'
+    url: 'https://github.com/supunucsc/chatfrontend/blob/master/commendo.jpeg'
     altText: Petstore logo
   license:
     name: Apache 2.0
