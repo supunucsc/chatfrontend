@@ -42,7 +42,7 @@ info:
     url: https://commendo.io
   x-logo:
     url: 'https://i.ibb.co/ysqN8Sq/commendo.jpg'
-    altText:'test'
+    altText:'65556'
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
