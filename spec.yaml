@@ -41,7 +41,7 @@ info:
     email: support@commendo.io
     url: https://commendo.io
   x-logo:
-    url: 'https://github.com/supunucsc/chatfrontend/blob/master/commendo.jpeg'
+    url: 'https://github.com/supunucsc/chatfrontend/blob/master/commendo.jpeg?raw=true'
     altText: Petstore logo
   license:
     name: Apache 2.0
