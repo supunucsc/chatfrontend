@@ -34,7 +34,7 @@ info:
 
 
   version: 1.0.0
-  title: Secur3DP+ API Powered by Commendo Blockchain
+  title: Commendo Blockchain API for Secur3DP+
   termsOfService: 'https://commendo.io/terms/'
   contact:
     name: API Support
@@ -42,7 +42,7 @@ info:
     url: https://commendo.io
   x-logo:
     url: 'https://i.ibb.co/ysqN8Sq/commendo.jpg'
-    altText: 'Commendo'
+    altText: Petstore logo
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
@@ -113,7 +113,6 @@ paths:
 
   /gettransactionssearch:
     parameters:
-    
       - name: Accept-Language
 
         description: "The language you prefer for messages. Supported values are en-AU, en-CA, en-GB, en-US"
@@ -276,8 +275,10 @@ components:
     Pet:
       type: object
       required:
-        - name
-        - photoUrls
+        - sender
+        - recepient
+        - data
+        - timestamp
 
       properties:
 
@@ -285,6 +286,7 @@ components:
           description: The transaction originator
           type: string
           example: Eng Kiat
+
         recepient:
           description: The transaction recepient
           type: string
@@ -292,33 +294,34 @@ components:
         data:
             type: string
             description: Transaction data json object in string
-            example: data120
+            example: {"Correlation_ID":"5e251d92a12ab00008f5abea","action":"NEW_CO_CREATE_PO","EntityId":"5e251d9506bd0e0008bb086e","EntityType":"PO","detail":{"delivery_status":"Waiting for printing","status":"new","_id":"5e251d9506bd0e0008bb086e","amc":"5c1366308b3aa92bfa086f58","pr":"5e251d92a12ab00008f5abeb","Correlation_ID":"5e251d92a12ab00008f5abea","functionalId":"PO52","createdAt":"2020-01-20T03:25:09.227Z","updatedAt":"2020-01-20T03:25:09.269Z","__v":0,"dn":"5e251d9506bd0e0008bb086f"}}
         timestamp:
           type: string
-          description: Transaction timestamp
-          example: data120
+          description: Transaction timestamp format should be YYYY-MM-DD HH:mm:SS
+          example: 2020-01-20 11:25:10
+
     Pet1:
         type: object
         required:
-          - name
-          - photoUrls
+          - blockchain_id
+
 
         properties:
 
           blockchain_id:
-            description: The blockchain_id of the required transaction
+            description: The blockchain_id of the required transaction(empty string not allowed, numeric 13 digit )
             type: string
             example: 1573792000845
     Pet2:
                   type: object
                   required:
-                    - name
+                    - multiple_ids
                     - photoUrls
 
                   properties:
 
                     multiple_ids:
-                      description: The blockchain_ids seperated by a comma for the required transactions
+                      description: The blockchain_ids seperated by a comma for the required transactions(empty string not allowed, comma contain checked)
                       type: string
                       example: 1573792000845,1573788522922
 
