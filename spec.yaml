@@ -41,7 +41,7 @@ info:
     email: support@commendo.io
     url: https://commendo.io
   x-logo:
-    url: https://i.ibb.co/ysqN8Sq/commendo.jpg
+    url: 'https://i.ibb.co/ysqN8Sq/commendo.jpg'
     altText:Commendo Logo
   license:
     name: Apache 2.0
