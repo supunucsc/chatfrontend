@@ -1,8 +1,8 @@
 openapi: 3.0.0
 servers:
-  - url: http://18.140.1.190:7000
+  - url: http://54.254.190.70:7000
     description: Secur3DP+ deployed AWS Instance(HTTP)
-  - url: https://18.140.1.190:7000
+  - url: https://54.254.190.70:7000
     description: Secur3DP+ deployed AWS Instance(HTTPS)
 
 info:
