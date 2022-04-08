@@ -6,7 +6,7 @@
     "bcryptjs": "2.3.0",
     "fontfaceobserver": "^1.5.1",
     "md5": "^2.2.1",
-    "moment": "^2.21.0",
+    "moment": "^2.29.2",
     "react": "^15.6.1",
     "react-bootstrap-sidebar": "0.0.1",
     "react-dom": "^15.6.1",
